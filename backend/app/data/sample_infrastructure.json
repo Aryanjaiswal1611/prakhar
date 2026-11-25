@@ -1,0 +1,142 @@
+{
+  "name": "ChaosBrain Sample Infrastructure",
+  "description": "Predefined 3-tier app with cache, auth, gateway, and external payment dependency",
+  "nodes": [
+    {
+      "node_key": "frontend",
+      "name": "Frontend",
+      "type": "frontend",
+      "status": "healthy",
+      "criticality": 2,
+      "x": 100,
+      "y": 220,
+      "metadata": {
+        "framework": "react"
+      }
+    },
+    {
+      "node_key": "gateway",
+      "name": "API Gateway",
+      "type": "gateway",
+      "status": "healthy",
+      "criticality": 3,
+      "x": 320,
+      "y": 220,
+      "metadata": {
+        "rateLimit": true
+      }
+    },
+    {
+      "node_key": "auth",
+      "name": "Authentication Service",
+      "type": "auth",
+      "status": "healthy",
+      "criticality": 3,
+      "x": 540,
+      "y": 100,
+      "metadata": {
+        "provider": "jwt"
+      }
+    },
+    {
+      "node_key": "backend",
+      "name": "Backend Service",
+      "type": "backend",
+      "status": "healthy",
+      "criticality": 4,
+      "x": 540,
+      "y": 260,
+      "metadata": {
+        "replicas": 1
+      }
+    },
+    {
+      "node_key": "database",
+      "name": "PostgreSQL Database",
+      "type": "database",
+      "status": "healthy",
+      "criticality": 5,
+      "x": 780,
+      "y": 320,
+      "metadata": {
+        "engine": "postgres",
+        "replicas": 1
+      }
+    },
+    {
+      "node_key": "cache",
+      "name": "Redis Cache",
+      "type": "cache",
+      "status": "healthy",
+      "criticality": 2,
+      "x": 780,
+      "y": 180,
+      "metadata": {
+        "engine": "redis"
+      }
+    },
+    {
+      "node_key": "payment",
+      "name": "External Payment Service",
+      "type": "external",
+      "status": "healthy",
+      "criticality": 3,
+      "x": 780,
+      "y": 60,
+      "metadata": {
+        "provider": "stripe-mock"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "edge_key": "e1",
+      "source_key": "frontend",
+      "target_key": "gateway",
+      "dependency_type": "sync",
+      "critical": true
+    },
+    {
+      "edge_key": "e2",
+      "source_key": "gateway",
+      "target_key": "auth",
+      "dependency_type": "sync",
+      "critical": true
+    },
+    {
+      "edge_key": "e3",
+      "source_key": "gateway",
+      "target_key": "backend",
+      "dependency_type": "sync",
+      "critical": true
+    },
+    {
+      "edge_key": "e4",
+      "source_key": "backend",
+      "target_key": "database",
+      "dependency_type": "sync",
+      "critical": true
+    },
+    {
+      "edge_key": "e5",
+      "source_key": "backend",
+      "target_key": "cache",
+      "dependency_type": "async",
+      "critical": false
+    },
+    {
+      "edge_key": "e6",
+      "source_key": "backend",
+      "target_key": "payment",
+      "dependency_type": "sync",
+      "critical": true
+    },
+    {
+      "edge_key": "e7",
+      "source_key": "auth",
+      "target_key": "database",
+      "dependency_type": "sync",
+      "critical": true
+    }
+  ]
+}

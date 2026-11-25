@@ -1,0 +1,37 @@
+[
+  {
+    "id": "db_failure",
+    "name": "Database connection failure",
+    "failure_type": "database_failure",
+    "default_severity": 4,
+    "description": "Database becomes unavailable; dependent services degrade."
+  },
+  {
+    "id": "server_failure",
+    "name": "Server failure",
+    "failure_type": "server_failure",
+    "default_severity": 5,
+    "description": "Target service crashes or becomes unreachable."
+  },
+  {
+    "id": "network_latency",
+    "name": "Network latency",
+    "failure_type": "network_latency",
+    "default_severity": 3,
+    "description": "High latency increases timeouts and degrades dependents."
+  },
+  {
+    "id": "cpu_overload",
+    "name": "CPU overload",
+    "failure_type": "cpu_overload",
+    "default_severity": 4,
+    "description": "CPU saturation causes slow responses and failures."
+  },
+  {
+    "id": "api_timeout",
+    "name": "API timeout",
+    "failure_type": "api_timeout",
+    "default_severity": 3,
+    "description": "Upstream calls timeout, cascading to callers."
+  }
+]
